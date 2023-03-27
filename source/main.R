@@ -32,6 +32,7 @@ pleio = pleiosim(
   random_withintrait_heterogeneity = TRUE
 )
 
+# save(pleio, file = "pleio_simulation_object.rda")
 
 
 
