@@ -14,6 +14,8 @@ pleiosim = function(
     random_withintrait_heterogeneity
 ){
   
+  ## Add error check
+  
   cat("\n\n----------------------------------------\n")
   cat(paste0("Simulating ", n_sample, " subjects...\n"))
   cat(paste0("Simulating ", n_variant_pleiotropic, " pleiotropic variants...\n"))
