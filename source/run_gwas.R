@@ -4,8 +4,9 @@ run_gwas = function(genotype_matrix, phenotype_matrix){
     apply(genotype_matrix, MARGIN = 2, function(gt){
       l = lm(ph ~ gt)
       beta = coef(l)[2]
+      se = summary(l)[["coefficients"]][2,2]
       p_value = summary(l)[["coefficients"]][2,4]
-      paste(beta, p_value, sep = "|")
+      paste(beta, se, p_value, sep = "|")
     })
   })
   
@@ -13,12 +14,17 @@ run_gwas = function(genotype_matrix, phenotype_matrix){
     as.numeric(unlist(strsplit(x, split = "[|]"))[1])
   })
   
-  pvalue_matrix = apply(gwas_coef, MARGIN = c(1,2), function(x){
+  se_matrix = apply(gwas_coef, MARGIN = c(1,2), function(x){
     as.numeric(unlist(strsplit(x, split = "[|]"))[2])
+  })
+  
+  pvalue_matrix = apply(gwas_coef, MARGIN = c(1,2), function(x){
+    as.numeric(unlist(strsplit(x, split = "[|]"))[3])
   })
   
   result_list = list(
     beta_matrix = beta_matrix,
+    se_matrix = se_matrix,
     pvalue_matrix = pvalue_matrix
   )
   
