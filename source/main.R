@@ -1,4 +1,5 @@
 source("drop_genotype_matrix.R")
+source("check_input.R")
 source("generate_uniform_heritable_correlation_matrix.R")
 source("generate_uniform_nonheritable_correlation_matrix.R")
 source("generate_variable_names.R")

@@ -14,9 +14,24 @@ pleiosim = function(
     random_withintrait_heterogeneity
 ){
   
-  ## Add error check
+  cat(paste0("Checking the validity of the simulation parameters supplied...\n "))
+  check_input(
+    n_sample = n_sample,
+    n_variant_pleiotropic = n_variant_pleiotropic,
+    n_variant_nonpleiotropic = n_variant_nonpleiotropic,
+    n_variant_null = n_variant_null,
+    eaf = eaf,
+    n_phenotype = n_phenotype,
+    heritable_correlation_matrix = heritable_correlation_matrix,
+    nonheritable_correlation_matrix = nonheritable_correlation_matrix,
+    heritability = heritability,
+    crosstrait_heterogeneity = crosstrait_heterogeneity,
+    withintrait_heterogeneity = withintrait_heterogeneity,
+    random_crosstrait_heterogeneity = random_crosstrait_heterogeneity,
+    random_withintrait_heterogeneity = random_withintrait_heterogeneity
+  )
   
-  cat("\n\n----------------------------------------\n")
+  cat("\n----------------------------------------\n")
   cat(paste0("Simulating ", n_sample, " subjects...\n"))
   cat(paste0("Simulating ", n_variant_pleiotropic, " pleiotropic variants...\n"))
   cat(paste0("Simulating ", sum(n_variant_nonpleiotropic), " non-pleiotropic functional variants...\n"))
