@@ -1,4 +1,11 @@
-library(pleiosim)
+if(!require("devtools")){
+  install.packages("devtools")
+}
+
+if(!require("pleiosim")){
+  devtools::install_github("Broccolito/pleiosim")
+  library("pleiosim")
+}
 
 pleio = pleiosim(
   n_sample = 10000,
