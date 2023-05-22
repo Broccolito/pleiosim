@@ -1,15 +1,28 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+options(tibble.print_min = 5, tibble.print_max = 5)
+```
 
 # PleioSim <a href='https://github.com/Broccolito/PleioSim'><img src='man/figures/logo.png' align="right" height="140"/></a>
 
 <!-- badges: start -->
-
-<br> <!-- badges: end -->
+<br>
+<!-- badges: end -->
 
 ## Installation
 
-``` r
+```{r,eval=FALSE}
 # Install devtools if it is not yet installed
 if(!require("devtools")){
   install.packages("devtools")
@@ -25,8 +38,7 @@ if(!require("pleiosim")){
 ## Usage
 
 Load the PleioSim package, set seed for the simulation
-
-``` r
+```{r,eval=FALSE}
 library(pleiosim)
 set.seed(492357816)
 ```
