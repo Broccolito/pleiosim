@@ -7,6 +7,8 @@ if(!require("pleiosim")){
   library("pleiosim")
 }
 
+set.seed(492357816)
+
 pleio = pleiosim(
   n_sample = 10000,
   n_variant_pleiotropic = 10,
