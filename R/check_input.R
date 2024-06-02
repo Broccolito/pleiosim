@@ -47,11 +47,11 @@ check_input = function(
     warning("High environmental correlations may compromise the validity of some pleiotropic methods...")
   }
 
-  if(n_phenotype < 3 && crosstrait_heterogeneity){
+  if(n_phenotype < 3 && random_crosstrait_heterogeneity){
     warning("The introduction of crosstrait heterogeneity cannot be randomized...")
   }
 
-  if(length(eaf) < 3 && withintrait_heterogeneity){
+  if(length(eaf) < 3 && random_withintrait_heterogeneity){
     warning("The introduction of withintrait heterogeneity cannot be randomized; consider simulating more variants...")
   }
 
