@@ -1,7 +1,7 @@
 Package: pleiosim
 Type: Package
 Title: Simulation of Pleiotropic Genotypes and Phenotypes
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: 
     person("Wanjun", "Gu", ,email = "wanjun.gu@ucsf.edu", role = c("aut", "cre"), 
            comment = c(ORCID = "0000-0002-7342-7000"))
