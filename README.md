@@ -3,7 +3,7 @@
 
 <!-- badges: start -->
 
-<br> <!-- badges: end -->
+<!-- badges: end -->
 
 **pleiosim** is an R package for simulating pleiotropic genetic data,
 including genotype generation, phenotype simulation, and summary
