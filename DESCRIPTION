@@ -1,11 +1,18 @@
 Package: pleiosim
-Title: PleioSim - Simulation of pleiotropic genotypes
-Version: 0.0.0.9000
+Type: Package
+Title: Simulation of Pleiotropic Genotypes and Phenotypes
+Version: 0.1.0
 Authors@R: 
-    person("Wanjun", "Gu", , "wagu@health.ucsd.edu", role = c("aut", "cre"),
+    person("Wanjun", "Gu", ,email = "wanjun.gu@ucsf.edu", role = c("aut", "cre"), 
            comment = c(ORCID = "0000-0002-7342-7000"))
-Description: What the package does (one paragraph).
-License: MIT
+Description: The 'pleiosim' package provides tools for simulating pleiotropic genetic data,
+    including the generation of genotypes, simulation of heritable and non-heritable phenotypes,
+    and calculation of summary statistics. It allows for flexible customization of genetic
+    architecture, including effect allele frequencies, effect size matrices, heritability,
+    and correlation structures between traits. The package supports modeling pleiotropy,
+    cross-trait heterogeneity, within-trait heterogeneity, and simulating diverse cohort
+    compositions. It is designed to facilitate research on the genetic architecture of complex traits, pleiotropy, and multi-trait genetic analysis.
+License: MIT + file LICENSE
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+LazyData: true
+RoxygenNote: 7.3.2
