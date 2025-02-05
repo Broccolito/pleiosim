@@ -39,6 +39,9 @@ devtools::install_github("Broccolito/pleiosim")
 # Load the package
 library(pleiosim)
 
+# Set a random seed
+set.seed(492357816)
+
 # Run a basic simulation
 pleio_object = pleiosim(
   n_phenotype = 3,                          # Number of phenotypes
@@ -345,7 +348,7 @@ The `pleio` object contains the following slots:
 
 - **summary_stats_matrix:** Summary statistics for each phenotype.
 
-- *Example:* Dataframe with `beta`, `se`, `p_value`, `eaf` columns.
+- *Example:* Matrix with `beta`, `se`, `p_value`, `eaf` columns.
 
 ## 📜 License
 
