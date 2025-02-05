@@ -58,9 +58,9 @@ pleio_object = pleiosim(
   customized_heritable_correlation_matrix = NULL, # Optional: provide custom matrix
   customized_nonheritable_correlation_matrix = NULL, # Optional: provide custom matrix
   customized_cohort_makeup_matrix = NULL,           # Optional: custom cohort structure
-  customized_eaf_matrix = NULL,                     # Optional: custom EAF matrix
-  customized_efs_matrix_template = NULL,            # Optional: custom EFS template
-  customized_efs_matrix = NULL                      # Optional: custom EFS matrix
+  customized_eaf_matrix = NULL,                     # Optional: custom effective allele frequency matrix
+  customized_efs_matrix_template = NULL,            # Optional: custom effect size template
+  customized_efs_matrix = NULL                      # Optional: custom effect size matrix
 )
 
 # Display the simulation summary
@@ -137,6 +137,216 @@ pleio_variant6 -0.7877619 0.07391664 2.229663e-26 0.40170
 - **Custom Matrices (`customized_*`)**: Provide custom matrices for
   advanced simulations, following the structure of default matrices.
 
+## 🔄 Customizing Matrices
+
+You can swap out the automatically generated matrices with customized
+versions for more control over your simulation. Below are tutorials for
+each matrix type.
+
+### 1. Heritable Correlation Matrix
+
+**Description:** The heritable correlation matrix captures the genetic
+correlation between phenotypes, reflecting how much the genetic factors
+influencing one trait also affect others. Customizing this matrix allows
+users to simulate different genetic architectures, from independent
+traits to highly correlated ones.
+
+**Structure:** A square matrix with dimensions equal to the number of
+phenotypes, diagonal values of 1, and off-diagonal values representing
+correlation coefficients.
+
+**Example:**
+
+``` r
+custom_heritable_corr = matrix(c(1, 0.3, 0.2,
+                                 0.3, 1, 0.4,
+                                 0.2, 0.4, 1), nrow = 3)
+
+pleio_object = pleiosim(
+  n_phenotype = 3,
+  customized_heritable_correlation_matrix = custom_heritable_corr
+)
+```
+
+### 2. Non-Heritable Correlation Matrix
+
+**Description:** This matrix models the correlation between phenotypes
+due to environmental or other non-genetic factors. Customizing it helps
+simulate different shared environmental influences or measurement errors
+across traits.
+
+**Structure:** Similar to the heritable correlation matrix.
+
+**Example:**
+
+``` r
+custom_nonheritable_corr = matrix(c(1, 0.1, 0.05,
+                                    0.1, 1, 0.2,
+                                    0.05, 0.2, 1), nrow = 3)
+
+pleio_object = pleiosim(
+  n_phenotype = 3,
+  customized_nonheritable_correlation_matrix = custom_nonheritable_corr
+)
+```
+
+### 3. Cohort Makeup Matrix
+
+**Description:** Defines the number of participants in each cohort and
+their overlaps. Customizing this matrix allows simulation of diverse
+cohort structures, including overlapping cohorts, multi-ancestry
+designs, or longitudinal datasets.
+
+**Structure:** A matrix specifying participant counts for each cohort
+and their intersections.
+
+**Example:**
+
+``` r
+custom_cohort_makeup = matrix(c(5000, 5000, 5000, 2000, 1000, 1500, 800), nrow = 1)
+colnames(custom_cohort_makeup) = c("cohort1", "cohort2", "cohort3", "cohort1_cohort2", "cohort1_cohort3", "cohort2_cohort3", "cohort1_cohort2_cohort3")
+rownames(custom_cohort_makeup) = "n_participant"
+
+pleio_object = pleiosim(
+  n_phenotype = 3,
+  customized_cohort_makeup_matrix = custom_cohort_makeup
+)
+```
+
+### 4. Effect Allele Frequency (EAF) Matrix
+
+**Description:** Represents the frequency of effect alleles across
+cohorts. Customizing this matrix helps simulate populations with
+different genetic ancestries, reflecting real-world allele frequency
+differences among diverse groups.
+
+**Structure:** Rows represent SNPs, columns represent cohorts. Values
+are allele frequencies.
+
+**Example:**
+
+``` r
+custom_eaf = matrix(runif(21, 0.1, 0.9), nrow = 21, ncol = 3)
+colnames(custom_eaf) = c("cohort1", "cohort2", "cohort3")
+rownames(custom_eaf) = paste0("variant", 1:21)
+
+pleio_object = pleiosim(
+  n_phenotype = 3,
+  customized_eaf_matrix = custom_eaf
+)
+```
+
+### 5. Effect Size (EFS) Matrix Template
+
+**Description:** Specifies which variants affect which phenotypes.
+Customizing this template allows simulation of different pleiotropic
+patterns, helping explore genetic architectures where certain variants
+influence specific traits.
+
+**Structure:** Rows represent phenotypes, columns represent variants.
+Binary values (1 or 0) indicate presence or absence of effects.
+
+**Example:**
+
+``` r
+custom_efs_template = matrix(c(1, 0, 0, 
+                               1, 1, 0, 
+                               0, 1, 1), nrow = 3)
+rownames(custom_efs_template) = c("phenotype1", "phenotype2", "phenotype3")
+colnames(custom_efs_template) = paste0("variant", 1:3)
+
+pleio_object = pleiosim(
+  n_phenotype = 3,
+  customized_efs_matrix_template = custom_efs_template
+)
+```
+
+### 6. Effect Size (EFS) Matrix
+
+**Description:** Defines the actual effect sizes of variants on
+phenotypes. Customizing this matrix enables control over the magnitude
+and direction of genetic effects, allowing simulations of strong or weak
+associations, or specific genetic models.
+
+**Structure:** Similar to the template, but with continuous effect sizes
+instead of binary values.
+
+**Example:**
+
+``` r
+custom_efs = matrix(c(0.8, -0.5, 0.3, 0.4, 1.2, -0.7, -0.3, 0.6, 0.9), nrow = 3)
+rownames(custom_efs) = c("phenotype1", "phenotype2", "phenotype3")
+colnames(custom_efs) = paste0("variant", 1:3)
+
+pleio_object = pleiosim(
+  n_phenotype = 3,
+  customized_efs_matrix = custom_efs
+)
+```
+
+## 📊 pleio Object Slots
+
+The `pleio` object contains the following slots:
+
+- **n_phenotype:** Number of phenotypes simulated.
+
+- *Example:* `3`
+
+- **n_variant_pleiotropic:** Number of pleiotropic variants.
+
+- *Example:* `10`
+
+- **n_variant_nonpleiotropic:** Number of non-pleiotropic variants per
+  phenotype.
+
+- *Example:* `c(10, 10, 10)`
+
+- **n_variant_null:** Number of null variants.
+
+- *Example:* `960`
+
+- **heritability:** Vector of heritability values for each phenotype.
+
+- *Example:* `c(0.1, 0.2, 0.3)`
+
+- **unique_cohorts:** Indicates if participants are unique across
+  cohorts.
+
+- *Example:* `TRUE`
+
+- **crosstrait_heterogeneity / withintrait_heterogeneity:** Flags for
+  heterogeneity modeling.
+
+- *Example:* `TRUE`
+
+- **heritable_correlation_matrix:** Matrix showing heritable correlation
+  between phenotypes.
+
+- *Example:* `matrix(c(1, 0.4, 0.3, 0.4, 1, 0.5, 0.3, 0.5, 1), nrow=3)`
+
+- **nonheritable_correlation_matrix:** Matrix for non-heritable
+  correlations.
+
+- *Example:*
+  `matrix(c(1, 0.2, 0.1, 0.2, 1, 0.15, 0.1, 0.15, 1), nrow=3)`
+
+- **cohort_makeup_matrix:** Defines the participant structure.
+
+- *Example:* See **Cohort Makeup Matrix** section.
+
+- **eaf_matrix:** Matrix of effect allele frequencies.
+
+- *Example:* See **Effect Allele Frequency Matrix** section.
+
+- **efs_matrix_template / efs_matrix:** Effect size templates and actual
+  matrices.
+
+- *Example:* See **Effect Size Matrix** section.
+
+- **summary_stats_matrix:** Summary statistics for each phenotype.
+
+- *Example:* Dataframe with `beta`, `se`, `p_value`, `eaf` columns.
+
 ## 📜 License
 
 This package is licensed under the MIT License. See the LICENSE file for
@@ -144,4 +354,4 @@ details.
 
 ------------------------------------------------------------------------
 
-*Developed by Wanjun Gu*
+*Developed by Wanjun Gu (wanjun for gu at ucsf.edu)*
